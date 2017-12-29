@@ -1,0 +1,74 @@
+<idea-plugin>
+  <id>HDFS</id>
+  <name>HDFS</name>
+  <version>1.0</version>
+  <vendor email="nzy-666@126.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+  <description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="145.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+  <project-components>
+    <component>
+      <implementation-class>com.thisnew.HdfsProjectComponent</implementation-class>
+    </component>
+  </project-components>
+
+
+  <depends>com.intellij.modules.lang</depends>
+
+
+  <extensions defaultExtensionNs="com.intellij">
+    <projectConfigurable instance="com.thisnew.ui.DFSConfigurable"/>
+    <projectService serviceInterface="com.thisnew.DFSConfigPersistence"
+                    serviceImplementation="com.thisnew.DFSConfigPersistence"/>
+  </extensions>
+
+
+
+  <actions>
+    <!-- Add your actions here -->
+    <!--  -->
+    <group id="DFS.Toolbar" text="HDFS ToolBar">
+      <action id="DFSRefreshNodeAction" class="com.thisnew.action.DFSRefreshNodeAction"
+              icon="/actions/refresh.png" text="Refresh" description="Refresh ZooKeeper"/>
+    </group>
+
+    <group id="DFS.OperationMenu" text="ZooKeeper Operations" popup="true">
+      <!--<action id="Open in Editor" class="OpenZkNodeInEditorAction"-->
+      <!--icon="/actions/edit.png" text="Open in Editor"/>-->
+      <!--<separator/>-->
+      <action id="Create Child Node" class="com.thisnew.action.DFSCreateAction"
+              icon="/" text="Create Node"/>
+      <separator/>
+      <action id="Delete Node" class="com.thisnew.action.DFSDeleteAction"
+              icon="/" text="Delete Node"/>
+      <separator/>
+      <!--<action id="Copy Node Path" class="CopyNodePathAction"-->
+      <!--icon="/actions/copy.png" text="Copy Node Path"/>-->
+    </group>
+
+    <action id="UpdateZkNodeAction" class="com.thisnew.action.DFSUpdataAction"
+            icon="/hadoop.png" text="Update Node" description="UpdateNode">
+      <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+    </action>
+  </actions>
+</idea-plugin>
