@@ -28,7 +28,7 @@ public class DFSConfigurable implements Configurable {
     private JPanel root;
     private JTextArea TextArea;
     private JButton testConnectionButton;
-    private JLabel DisplayConStatus;
+    private JTextArea DisplayConStatus;
     private JLabel portLabel;
     private JLabel urlLabel;
     private Project project;
@@ -40,6 +40,7 @@ public class DFSConfigurable implements Configurable {
         testConnectionButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                    DisplayConStatus.setText(" ");
                     String reg="^(http|https|ftp)\\://(((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])|([a-zA-Z0-9_\\-\\.])+\\.(com|net|org|edu|int|mil|gov|arpa|biz|aero|name|coop|info|pro|museum|uk|me))((:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\\-\\._\\?\\,\\'/\\\\\\+&%\\$#\\=~])*)$*";
                     String url=textField1.getText().trim()+":"+textField2.getText().trim();
                     if(!url.matches(reg)){
