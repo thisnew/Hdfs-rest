@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Hdfs-rest:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Hdfs_rest_jar</output-path>
+    <root id="archive" name="Hdfs-rest.jar">
+      <element id="module-output" name="Hdfs-rest" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/resources/httpcore-4.4.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/resources/httpclient-4.5.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/resources/commons-codec-1.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/resources/jackson-core-2.6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/resources/commons-logging-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/resources/jackson-databind-2.6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/resources/jackson-annotations-2.6.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -14,20 +14,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectionWork {
+public class ConnectionClient {
 
     private CloseableHttpClient httpclient;
     private String HOST_URL;
     private ObjectMapper om = new ObjectMapper();
 
 
-    public ConnectionWork(String url) {
+    public ConnectionClient(String url) {
         this.httpclient = HttpClients.createDefault();
         this.HOST_URL = url;
     }
 
     //http://118.190.85.52:14000/webhdfs/v1/alidata1?op=LISTSTATUS&user.name=admin
-    String executeQuary(String wayLink, String type) {
+     String executeQuary(String wayLink, String type) {
         HttpGet httpget = new HttpGet(HOST_URL + "/webhdfs/v1" + wayLink + "?op=" + type + "&user.name=admin");
         CloseableHttpResponse execute = null;
         try {
@@ -38,7 +38,9 @@ public class ConnectionWork {
         return responseStatus(execute);
     }
 
-    String responseStatus(CloseableHttpResponse response) {
+
+
+    public String responseStatus(CloseableHttpResponse response) {
         String content = null;
         if (response.getStatusLine().getStatusCode() == 200) {
             try {
@@ -140,5 +142,29 @@ public class ConnectionWork {
         return blockInfo;
     }
 
+    public String ForTestExecuteQuary() {
+        String statusNum= null;
+        HttpGet httpget = new HttpGet(HOST_URL + "/webhdfs/v1/?op=LISTSTATUS&user.name=admin");
+        CloseableHttpResponse execute = null;
+        try {
+            execute = this.httpclient.execute(httpget);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return e.getCause().getMessage();
+        }
+        statusNum =""+execute.getStatusLine().getStatusCode();
+        return statusNum;
+    }
+
+    public boolean isKerberos(){
+        return false;
+    }
+    public boolean isConnection(){
+        return false;
+    }
+    public boolean isLegal(){
+        return false;
+
+    }
 
 }

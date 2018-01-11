@@ -5,7 +5,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileListener;
 import com.intellij.openapi.vfs.ex.dummy.DummyFileSystem;
-import com.thisnew.httputil.ConnectionWork;
+import com.thisnew.httputil.ConnectionClient;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,10 +19,10 @@ import java.nio.charset.Charset;
 public class DFSVirturalFileSystem extends DummyFileSystem {
 
     public static final String PROTOCOL = "DFS";
-    private ConnectionWork cw;
+    private ConnectionClient cw;
     private Charset charset = Charset.forName("utf-8");
 
-    public DFSVirturalFileSystem(ConnectionWork cw, String charset){
+    public DFSVirturalFileSystem(ConnectionClient cw, String charset){
         this.cw=cw;
         if(StringUtil.isEmpty(charset)){
             charset="utf-8";
@@ -124,7 +124,7 @@ public class DFSVirturalFileSystem extends DummyFileSystem {
         return false;
     }
 
-    public ConnectionWork getCw() {
+    public ConnectionClient getCw() {
         return this.cw;
     }
 }

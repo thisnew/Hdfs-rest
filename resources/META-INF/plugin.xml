@@ -53,21 +53,21 @@
     </group>
 
     <group id="DFS.OperationMenu" text="ZooKeeper Operations" popup="true">
-      <!--<action id="Open in Editor" class="OpenZkNodeInEditorAction"-->
-      <!--icon="/actions/edit.png" text="Open in Editor"/>-->
-      <!--<separator/>-->
+      <action id="Open in Editor" class="com.thisnew.action.DFSOpenEditorAction"
+      icon="/actions/refresh.png" text="Open in Editor"/>
+      <separator/>
       <action id="Create Child Node" class="com.thisnew.action.DFSCreateAction"
-              icon="/" text="Create Node"/>
+              icon="/actions/refresh.png" text="Create Node"/>
       <separator/>
       <action id="Delete Node" class="com.thisnew.action.DFSDeleteAction"
-              icon="/" text="Delete Node"/>
+              icon="/actions/refresh.png" text="Delete Node"/>
       <separator/>
       <!--<action id="Copy Node Path" class="CopyNodePathAction"-->
       <!--icon="/actions/copy.png" text="Copy Node Path"/>-->
     </group>
 
     <action id="UpdateZkNodeAction" class="com.thisnew.action.DFSUpdataAction"
-            icon="/hadoop.png" text="Update Node" description="UpdateNode">
+            icon="/actions/refresh.png" text="Update Node" description="UpdateNode">
       <add-to-group group-id="EditorPopupMenu" anchor="last"/>
     </action>
   </actions>

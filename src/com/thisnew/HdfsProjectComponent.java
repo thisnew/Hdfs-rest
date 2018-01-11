@@ -21,7 +21,7 @@ import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.treeStructure.Tree;
-import com.thisnew.httputil.ConnectionWork;
+import com.thisnew.httputil.ConnectionClient;
 import com.thisnew.ui.DFSNode;
 import com.thisnew.ui.DFSTreeModel;
 import com.thisnew.vsf.DFSVirturalFileSystem;
@@ -45,7 +45,7 @@ public class HdfsProjectComponent extends DoubleClickListener implements Project
     private Project project;
     private Tree DFSTree;
     private final Icon rootIcon = IconLoader.findIcon("hadoop.png");
-    private ConnectionWork cw;
+    private ConnectionClient cw;
 
     private DFSVirturalFileSystem dvfs;
 
@@ -80,7 +80,7 @@ public class HdfsProjectComponent extends DoubleClickListener implements Project
         //获取tree
 
         DFSTree=new Tree(new DFSTreeModel(cw,config.whitePaths));
-        //todo 设置tree类 curator, config.whitePaths 构造
+        // 设置tree类 curator, config.whitePaths 构造
         //插件提示注册
         ToolTipManager.sharedInstance().registerComponent(DFSTree);
         //选择模式
@@ -201,7 +201,7 @@ public class HdfsProjectComponent extends DoubleClickListener implements Project
         }
         DFSConfigPersistence config= DFSConfigPersistence.getInstance(project);
         if(config.isAvailable()){
-            this.cw=new ConnectionWork(config.getUrl());
+            this.cw=new ConnectionClient(config.getUrl());
             cw.start();
             this.dvfs= new DFSVirturalFileSystem(cw,DFSConfigPersistence.getInstance(project).charset);
         }

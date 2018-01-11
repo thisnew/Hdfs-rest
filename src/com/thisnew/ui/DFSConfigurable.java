@@ -6,10 +6,18 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.thisnew.DFSConfigPersistence;
 import com.thisnew.HdfsProjectComponent;
+import com.thisnew.httputil.ConnectionClient;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.InetAddress;
 
 public class DFSConfigurable implements Configurable {
     private JTextField textField1;      //url
@@ -19,14 +27,66 @@ public class DFSConfigurable implements Configurable {
     private JCheckBox checkBox1;
     private JPanel root;
     private JTextArea TextArea;
-
+    private JButton testConnectionButton;
+    private JLabel DisplayConStatus;
+    private JLabel portLabel;
+    private JLabel urlLabel;
     private Project project;
     private DFSConfigPersistence config;
-
     public DFSConfigurable(Project pj){
         this.project=pj;
         this.config=DFSConfigPersistence.getInstance(pj);
+
+        testConnectionButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                    String reg="^(http|https|ftp)\\://(((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])|([a-zA-Z0-9_\\-\\.])+\\.(com|net|org|edu|int|mil|gov|arpa|biz|aero|name|coop|info|pro|museum|uk|me))((:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\\-\\._\\?\\,\\'/\\\\\\+&%\\$#\\=~])*)$*";
+                    String url=textField1.getText().trim()+":"+textField2.getText().trim();
+                    if(!url.matches(reg)){
+                        DisplayConStatus.setForeground(Color.red);
+                        DisplayConStatus.setText("Error url: " + url);
+                    }else {
+                        String status = new ConnectionClient(url).ForTestExecuteQuary();
+                        if (status.equals("200")) {
+                            DisplayConStatus.setForeground(Color.green);
+                            DisplayConStatus.setText("Successful");
+                        } else {
+                            DisplayConStatus.setForeground(Color.red);
+                            DisplayConStatus.setText("Error code: " + status);
+                        }
+                        super.mouseClicked(e);
+                    }
+                }
+        });
+        textField1.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                urlLabel.setText(" ");
+                String reg="^(http|https|ftp)\\://(((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])|([a-zA-Z0-9_\\-\\.])+\\.(com|net|org|edu|int|mil|gov|arpa|biz|aero|name|coop|info|pro|museum|uk|me))((:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\\-\\._\\?\\,\\'/\\\\\\+&%\\$#\\=~])*)$*";
+                if(!textField1.getText().trim().matches(reg)){
+                    urlLabel.setForeground(Color.red);
+                    urlLabel.setText("Mismatch");
+                }
+                super.focusLost(e);
+            }
+        });
+        textField2.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                portLabel.setText(" ");
+                String regport="^([0-9]|[1-9]\\d|[1-9]\\d{2}|[1-9]\\d{3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$";
+                if(!textField2.getText().trim().matches(regport)){
+                    portLabel.setForeground(Color.red);
+                    portLabel.setText("Mismatch");
+                }
+                super.focusLost(e);
+            }
+        });
+
+
     }
+
+
 
     @Nls
     @Override
@@ -62,12 +122,11 @@ public class DFSConfigurable implements Configurable {
                 && newCharset.equals(config.charset)
                 && config.enabled == checkBox1.isSelected()
                 && (newPath.equals(config.whitePaths)));
-
     }
 
 
     @Override
-    public void apply() throws ConfigurationException {
+    public void apply() {
         String oldHost = config.host;
         config.host = textField1.getText().trim();
         config.port = Integer.valueOf(textField2.getText().trim());
@@ -79,7 +138,6 @@ public class DFSConfigurable implements Configurable {
             if(ToolWindowManager.getInstance(project).getToolWindow("HDFS") ==null){
                 hdfsProjectComponent.initWindowsTools();
             }
-
         }
         // host changed to init zk again
         if (oldHost != null && !oldHost.equals(config.host)) {
@@ -90,6 +148,7 @@ public class DFSConfigurable implements Configurable {
         if (config.isAvailable()) {
             hdfsProjectComponent.reloadDFSTree();
         }
+
 
 
     }

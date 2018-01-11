@@ -8,7 +8,7 @@ import com.intellij.openapi.vfs.VirtualFileListener;
 import com.intellij.openapi.vfs.VirtualFileSystem;
 import com.intellij.util.LocalTimeCounter;
 import com.thisnew.httputil.BlockInfo;
-import com.thisnew.httputil.ConnectionWork;
+import com.thisnew.httputil.ConnectionClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -212,7 +212,7 @@ public class DFSNodeVirtualFile extends VirtualFile {
         return fileType;
     }
 
-    public ConnectionWork getConnectionWork() {
+    public ConnectionClient getConnectionWork() {
         return fileSystem.getCw();
     }
 

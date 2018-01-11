@@ -71,11 +71,12 @@ public class DFSConfigPersistence implements PersistentStateComponent<DFSConfigP
     }
 
     public String getUrl() {
-        if (host.contains(":")) {
-            return host;
-        } else {
-            return host + ":" + port;
+
+
+        if(port.equals("")&&port==null) {
+            this.port=14000;
         }
+        return host + ":" + port;
     }
 
     public String getFirstServer() {

@@ -2,7 +2,7 @@ package com.thisnew.ui;
 
 import com.intellij.openapi.util.text.StringUtil;
 import com.thisnew.httputil.BlockInfo;
-import com.thisnew.httputil.ConnectionWork;
+import com.thisnew.httputil.ConnectionClient;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
@@ -16,10 +16,10 @@ import java.util.*;
  */
 public class DFSTreeModel implements TreeModel {
     private DFSNode root = new DFSNode("/", null);
-    private ConnectionWork cw;
+    private ConnectionClient cw;
     private List<String> whitePaths;
 
-    public DFSTreeModel(ConnectionWork cw, String whitePaths) {
+    public DFSTreeModel(ConnectionClient cw, String whitePaths) {
         this.cw = cw;
         if (StringUtil.isNotEmpty(whitePaths)) {
             this.whitePaths = Arrays.asList(whitePaths.trim().split("[\\s;]+"));
