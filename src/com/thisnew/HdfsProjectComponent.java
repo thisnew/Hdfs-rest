@@ -44,7 +44,7 @@ public class HdfsProjectComponent extends DoubleClickListener implements Project
 
     private Project project;
     private Tree DFSTree;
-    private final Icon rootIcon = IconLoader.findIcon("hadoop.png");
+    private final Icon rootIcon = IconLoader.findIcon("resources/zoo.png");
     private ConnectionClient cw;
 
     private DFSVirturalFileSystem dvfs;

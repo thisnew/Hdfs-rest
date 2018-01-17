@@ -83,11 +83,7 @@ public class DFSConfigurable implements Configurable {
                 super.focusLost(e);
             }
         });
-
-
     }
-
-
 
     @Nls
     @Override
@@ -125,7 +121,6 @@ public class DFSConfigurable implements Configurable {
                 && (newPath.equals(config.whitePaths)));
     }
 
-
     @Override
     public void apply() {
         String oldHost = config.host;
@@ -143,15 +138,11 @@ public class DFSConfigurable implements Configurable {
         // host changed to init zk again
         if (oldHost != null && !oldHost.equals(config.host)) {
             hdfsProjectComponent.initDFS();
-
         }
         config.path = textField3.getText();
         if (config.isAvailable()) {
             hdfsProjectComponent.reloadDFSTree();
         }
-
-
-
     }
 
     @Override
